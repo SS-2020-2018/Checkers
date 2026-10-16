@@ -15,9 +15,12 @@ def main(gamemode):
     fps_clock = pg.time.Clock()
     game_control = None
 
-    # Creates a GameControl with an AI instance if gamemode is "cpu"
+    # Creates a GameControl with one or two AI instances for the computer modes.
     if gamemode == "cpu":
         game_control = GameControl(PLAYER_COLOR, True)
+    elif gamemode == "ai":
+        game_control = GameControl(PLAYER_COLOR, False, True)
+        pg.time.set_timer(USEREVENT, 400)
     else:
         game_control = GameControl(PLAYER_COLOR, False)
 
@@ -56,11 +59,13 @@ def main(gamemode):
             if event.type == USEREVENT:
                 # AI movement
                 if game_control.get_winner() is not None:
+                    if gamemode == "ai":
+                        pg.time.set_timer(USEREVENT, 0)
                     continue
 
                 game_control.move_ai()
 
-                if game_control.get_turn() == PLAYER_COLOR:
+                if game_control.get_turn() == PLAYER_COLOR and gamemode == "cpu":
                     pg.time.set_timer(USEREVENT, 0)
         
         pg.display.update()
@@ -70,7 +75,7 @@ if __name__ == '__main__':
     if len(argv) != 2:
         print("Please specify the game mode. Example: python checkers.py cpu")
     else:
-        if argv[1] in ["cpu", "pvp"]:
+        if argv[1] in ["cpu", "pvp", "ai"]:
             main(argv[1])
         else:
             print("Game mode not found.")

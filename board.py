@@ -128,12 +128,11 @@ class Board:
     
     def get_winner(self):
         # Returns the winning color or None if no player has won yet
-        current_color = self.pieces[0].get_color()
+        if len(self.pieces) == 0:
+            return None
 
-        for piece in self.pieces:
-            if piece.get_color() != current_color:
-                break
-        else:
-            return current_color
-        
+        colors = set(piece.get_color() for piece in self.pieces)
+        if len(colors) == 1:
+            return colors.pop()
+
         return None

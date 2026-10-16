@@ -37,3 +37,7 @@ def test_get_pieces_by_coords():
     test_piece = Piece('8WN')
     test_board = Board([test_piece], 'W')
     assert test_board.get_pieces_by_coords((2, 0), (3, 0)) == [test_piece, None]
+
+def test_get_winner_does_not_depend_on_piece_order():
+    test_board = Board([Piece('12BN'), Piece('24BN'), Piece('8BN')], 'W')
+    assert test_board.get_winner() == 'B'

@@ -23,3 +23,11 @@ def test_get_move():
     test_ai = AI('B')
     test_board = Board([Piece('9WN'), Piece('17BN'), Piece('21BN')], 'B')
     assert test_ai.get_move(test_board) in [{"position_from": "17", "position_to": "13"}, {"position_from": "21", "position_to": "18"}]
+
+def test_white_ai_returns_a_white_move():
+    test_ai = AI('W')
+    test_board = Board([Piece('9WN'), Piece('17BN'), Piece('21BN')], 'B')
+    move = test_ai.get_move(test_board)
+
+    assert move["position_from"] == "9"
+    assert move["position_to"] in ["12", "13"]

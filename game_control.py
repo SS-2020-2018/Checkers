@@ -6,15 +6,19 @@ from ai import AI
 from utils import get_surface_mouse_offset, get_piece_position
 
 class GameControl:
-    def __init__(self, player_color, is_computer_opponent):
+    def __init__(self, player_color, is_computer_opponent, is_ai_vs_ai=False):
         self.turn = player_color
         self.winner = None
         self.board = None
         self.board_draw = None
         self.held_piece = None
         self.ai_control = None
+        self.ai_controls = {}
+        self.is_ai_vs_ai = is_ai_vs_ai
 
-        if is_computer_opponent:
+        if is_ai_vs_ai:
+            self.ai_controls = {"W": AI("W"), "B": AI("B")}
+        elif is_computer_opponent:
             self.ai_control = AI("B") if player_color == "W" else AI("W")
 
         self.setup()
@@ -116,10 +120,18 @@ class GameControl:
 
     def move_ai(self):
         # Gets best move from an AI instance and moves it.
-        if self.turn == "W":
+        if self.is_ai_vs_ai:
+            ai = self.ai_controls[self.turn]
+        else:
+            if self.turn == "W":
+                return
+            ai = self.ai_control
+
+        optimal_move = ai.get_move(self.board)
+        if optimal_move is None:
+            self.winner = "B" if self.turn == "W" else "W"
             return
 
-        optimal_move = self.ai_control.get_move(self.board)
         index_moved = -1
         piece_moved = None
 
