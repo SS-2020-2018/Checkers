@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Checkers by Mesba and Safiul.">
+  <title>Checkers | Mesba &amp; Safiul</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="welcome-screen" class="screen welcome-screen">
+      <div class="welcome-card">
+        <div class="brand-mark" aria-hidden="true">♟</div>
+        <p class="eyebrow">A classic strategy game</p>
+        <h1>Checkers</h1>
+        <p class="welcome-copy">Plan your jumps, crown your pieces, and outplay your opponent.</p>
+        <button id="lets-play-button" class="primary-button" type="button">Let's Play <span aria-hidden="true">→</span></button>
+      </div>
+      <footer class="site-footer">Created with care by <strong>Mesba &amp; Safiul</strong></footer>
+    </section>
+
+    <section id="mode-screen" class="screen mode-screen is-hidden" aria-labelledby="mode-title">
+      <div class="mode-card">
+        <button id="back-to-welcome" class="back-button" type="button">← Back</button>
+        <p class="eyebrow">Choose your challenge</p>
+        <h2 id="mode-title">How do you want to play?</h2>
+        <div class="mode-grid">
+          <button class="mode-option" data-mode="human-human" type="button">
+            <span class="mode-icon" aria-hidden="true">♟ ♟</span>
+            <span class="mode-name">Human vs Human</span>
+            <span class="mode-description">Challenge someone beside you.</span>
+          </button>
+          <button class="mode-option" data-mode="human-ai" type="button">
+            <span class="mode-icon" aria-hidden="true">♟ ✦</span>
+            <span class="mode-name">Human vs AI</span>
+            <span class="mode-description">Play as white against the computer.</span>
+          </button>
+          <button class="mode-option" data-mode="ai-ai" type="button">
+            <span class="mode-icon" aria-hidden="true">✦ ✦</span>
+            <span class="mode-name">AI vs AI</span>
+            <span class="mode-description">Watch two computer players compete.</span>
+          </button>
+        </div>
+      </div>
+      <footer class="site-footer">Created with care by <strong>Mesba &amp; Safiul</strong></footer>
+    </section>
+
+    <section id="game-screen" class="screen game-screen is-hidden" aria-labelledby="game-title">
+      <header class="game-header">
+        <div>
+          <p class="eyebrow">Mesba &amp; Safiul present</p>
+          <h2 id="game-title">Checkers</h2>
+        </div>
+        <button id="new-game-button" class="outline-button" type="button">New game</button>
+      </header>
+
+      <div class="game-layout">
+        <div class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="Checkers board"></div>
+        </div>
+        <aside class="game-panel">
+          <div class="status-card">
+            <span class="status-label">Current turn</span>
+            <div class="turn-line">
+              <span id="turn-piece" class="mini-piece white-piece" aria-hidden="true"></span>
+              <strong id="turn-text">White's turn</strong>
+            </div>
+            <p id="status-message" class="status-message">Select a piece to begin.</p>
+          </div>
+          <div class="score-card">
+            <div class="score-row"><span><i class="mini-piece white-piece" aria-hidden="true"></i> White</span><strong id="white-count">12</strong></div>
+            <div class="score-row"><span><i class="mini-piece black-piece" aria-hidden="true"></i> Black</span><strong id="black-count">12</strong></div>
+          </div>
+          <div class="rules-card">
+            <h3>How to play</h3>
+            <p>Move diagonally and capture by jumping. Captures are mandatory. Reach the opposite end to crown a king.</p>
+          </div>
+          <p id="mode-label" class="mode-label">Human vs Human</p>
+        </aside>
+      </div>
+      <footer class="game-footer">Created with care by <strong>Mesba &amp; Safiul</strong></footer>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
