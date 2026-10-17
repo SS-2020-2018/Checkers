@@ -51,6 +51,9 @@ class GameControl:
             self.held_piece.draw_piece(display_surface)
 
     def hold_piece(self, mouse_pos):
+        if self.winner is not None or self.held_piece is not None:
+            return
+
         piece_clicked = self.board_draw.get_piece_on_mouse(mouse_pos)
         board_pieces = self.board.get_pieces()
         has_jump_restraint = False # True if any piece can jump in one of its moves, forcing the player to jump
@@ -108,9 +111,24 @@ class GameControl:
             
             if len(jump_moves) == 0 or piece_moved.get_has_eaten() == False:
                 self.turn = "B" if self.turn == "W" else "W"
+                self._update_winner()
 
         self.held_piece = None
         self.board_draw.set_move_marks([])
+
+    def _update_winner(self):
+        if self.winner is not None:
+            return
+
+        self.winner = self.board.get_winner()
+        if self.winner is not None:
+            return
+
+        for piece in self.board.get_pieces():
+            if piece.get_color() == self.turn and piece.get_moves(self.board):
+                return
+
+        self.winner = "B" if self.turn == "W" else "W"
 
     def set_held_piece(self, index, piece, mouse_pos):
         # Creates a HeldPiece object to follow the mouse
@@ -120,6 +138,9 @@ class GameControl:
 
     def move_ai(self):
         # Gets best move from an AI instance and moves it.
+        if self.winner is not None:
+            return
+
         if self.is_ai_vs_ai:
             ai = self.ai_controls[self.turn]
         else:
@@ -152,3 +173,4 @@ class GameControl:
 
         if len(jump_moves) == 0 or piece_moved.get_has_eaten() == False:
             self.turn = "B" if self.turn == "W" else "W"
+            self._update_winner()
